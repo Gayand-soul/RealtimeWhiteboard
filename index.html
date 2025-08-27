@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realtime Whiteboard</title>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Realtime Whiteboard</h1>
+            <p>Rita och samarbeta i realtid med Firebase</p>
+        </header>
+        
+        <div class="controls">
+            <div class="tool-section">
+                <button class="tool-btn active" data-tool="pencil">Penna</button>
+                <button class="tool-btn" data-tool="eraser">Suddgummi</button>
+
+                <div class="current-tool">
+                    Aktuellt: 
+                    <span id="current-tool-name">Penna</span>
+                    <span class="tool-indicator" id="current-tool-indicator"></span>
+                </div>
+            </div>
+
+            
+            <div class="color-section">
+                <div class="color-option active" style="background-color: #000000;" data-color="#000000"></div>
+                <div class="color-option" style="background-color: #ff0000;" data-color="#ff0000"></div>
+                <div class="color-option" style="background-color: #0000ff;" data-color="#0000ff"></div>
+                <div class="color-option" style="background-color: #00cc00;" data-color="#00cc00"></div>
+                <div class="color-option" style="background-color: #035c03;" data-color="#035c03"></div>
+                <div class="color-option" style="background-color: #f6fa02;" data-color="#f6fa02"></div>
+                <div class="color-option" style="background-color: #fa02d1;" data-color="#fa02d1"></div>
+            </div>
+
+            <div class="size-controls">
+                <span class="size-label">Storlek:</span>
+                <input type="range" min="1" max="50" value="5" class="size-slider" id="size-slider">
+                <span id="size-value">5px</span>
+            </div>
+
+            <button class="clear-btn" id="clear-btn">Rensa Whiteboard</button>
+        </div>
+
+        <div class="whiteboard-container">
+            <canvas id="whiteboard"></canvas>
+        </div>
+
+        <div class="users-container">
+            <div class="user-count">
+                Anslutna användare: <span id="user-count">1</span>
+            </div>
+            <div class="user-list" id="user-list">
+                <!-- Användare visas här dynamiskt -->
+            </div>
+            <div class="connection-status">
+                <div class="status-dot"></div>
+                <span>Ansluten</span>
+            </div>
+        </div>
+    </div>  
+        
+    <div class="instructions">
+        <h2>Hur du använder whiteboard:</h2>
+        <p>Välj ett verktyg och en färg och börja rita på canvasen. Alla anslutna användare kommer att se dina ändringar i realtid.</p>
+        <p><strong>Tips:</strong> Dela länken till den här sidan med andra så kan de ansluta och rita tillsammans med dig!</p>
+        <p><strong>Teknik:</strong> Firebase Realtime Database synkroniserar alla ritningar mellan användare.</p>
+    </div>
+    
+
+    <script src="index.js"></script>
+
+    
+</body>
+</html>
