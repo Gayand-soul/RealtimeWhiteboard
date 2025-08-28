@@ -3,16 +3,7 @@
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCiF3qTlQvYX3rCiSjlqAsUZLsd8Q6UWvg",
-  authDomain: "realtime-whiteboard-5be19.firebaseapp.com",
-  databaseURL: "https://realtime-whiteboard-5be19-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "realtime-whiteboard-5be19",
-  storageBucket: "realtime-whiteboard-5be19.firebasestorage.app",
-  messagingSenderId: "881235709305",
-  appId: "1:881235709305:web:1bd84d07fc4309c5adf3a8",
-  measurementId: "G-EZ262QFK2N"
-};
+
 
  // Initiera Firebase
         firebase.initializeApp(firebaseConfig);
