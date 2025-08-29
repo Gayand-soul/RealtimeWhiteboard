@@ -17,6 +17,7 @@ let lastX = 0;
 let lastY = 0;
 let currentTool = 'pencil';
 let currentColor = '#000000';
+let currentSize = 5; // Standardtjocklek
 
 // Uppdatera verktygsindikatorn
 function updateToolIndicator() {
@@ -36,6 +37,20 @@ function updateToolIndicator() {
     }
 }
 
+// Storleksreglage
+const sizeSlider = document.getElementById('size-slider');
+const sizeValue = document.getElementById('size-value');
+
+// Uppdatera storleken när reglaget ändras
+sizeSlider.addEventListener('input', function() {
+    currentSize = parseInt(this.value);
+    sizeValue.textContent = currentSize + 'px';
+});
+
+// Initiera visa storlek vid start
+sizeValue.textContent = currentSize + 'px';
+
+
 // Rita en linje på canvas
 function drawLine(x1, y1, x2, y2, color, tool) {
     ctx.beginPath();
@@ -43,9 +58,9 @@ function drawLine(x1, y1, x2, y2, color, tool) {
     ctx.lineTo(x2, y2);
     ctx.strokeStyle = tool === 'eraser' ? '#FFFFFF' : color;
     
-    // Gör suddgummit TJOCKARE (20px) och pennan normalt (5px)
-    ctx.lineWidth = tool === 'eraser' ? 20 : 5;
-
+    // Använd currentSize för pennan och gör suddgummit 3x större
+    ctx.lineWidth = tool === 'eraser' ? currentSize * 3 : currentSize;
+    
     ctx.lineCap = 'round';
     ctx.stroke();
 }
