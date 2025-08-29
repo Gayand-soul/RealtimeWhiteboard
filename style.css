@@ -108,6 +108,7 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             position: relative;
+            
         }
 
         #whiteboard {
@@ -117,6 +118,7 @@
             cursor: crosshair;
             display: block;
             width: 100%;
+            height: 600px;
             touch-action: none;
         }
 
