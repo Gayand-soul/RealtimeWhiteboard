@@ -42,7 +42,10 @@ function drawLine(x1, y1, x2, y2, color, tool) {
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.strokeStyle = tool === 'eraser' ? '#FFFFFF' : color;
-    ctx.lineWidth = 5;
+    
+    // Gör suddgummit TJOCKARE (20px) och pennan normal (5px)
+    ctx.lineWidth = tool === 'eraser' ? 20 : 5;
+    
     ctx.lineCap = 'round';
     ctx.stroke();
 }
@@ -98,3 +101,13 @@ document.querySelectorAll('.color-option').forEach(option => {
 
 // Uppdatera indikatorn vid start
 updateToolIndicator();
+
+// Rensa whiteboard-funktion
+document.getElementById('clear-btn').addEventListener('click', () => {
+    // Rensa canvas genom att fylla med vit färg
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Om du använder Firebase i framtiden, skicka en rensa-händelse här
+    console.log('Whiteboard rensad!');
+});
