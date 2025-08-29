@@ -43,9 +43,9 @@ function drawLine(x1, y1, x2, y2, color, tool) {
     ctx.lineTo(x2, y2);
     ctx.strokeStyle = tool === 'eraser' ? '#FFFFFF' : color;
     
-    // Gör suddgummit TJOCKARE (20px) och pennan normal (5px)
+    // Gör suddgummit TJOCKARE (20px) och pennan normalt (5px)
     ctx.lineWidth = tool === 'eraser' ? 20 : 5;
-    
+
     ctx.lineCap = 'round';
     ctx.stroke();
 }
