@@ -1,13 +1,12 @@
 
-// index.js - LÄGG TILL DENNA RAD ÖVERST!
+// index.js - KORRIGERAD KOD
 document.addEventListener('DOMContentLoaded', function() {
-    // ✅ INITIERA FIREBASE FÖRST! (Lägg till denna rad)
+    // ✅ INITIERA FIREBASE FÖRST!
     firebase.initializeApp(window.firebaseConfig);
 
-    // ✅ Använd database istället för firestore
-    const database = firebase.database();
-    
+    // ✅ AUTO-SHOW LOGIN ON GITHUB PAGES - NY KOD
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+        // Auto-login endast på localhost
         firebase.auth().signInWithEmailAndPassword("testtim@example.com", "test1234")
             .then((userCredential) => {
                 console.log("Auto-inloggad som testanvändare");
@@ -18,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 showLoginButton();
             });
     } else {
-        showLoginForm();
+        // På GitHub Pages: visa alltid login-knapp direkt
+        showLoginButton();
     }
 });
 
@@ -82,6 +82,15 @@ function manualLogin() {
 function initWhiteboard() {
   // Här startar du din whiteboard funktionalitet
   console.log("Whiteboard redo!");
+
+    // ✅ FORCE LOGIN CHECK - NY KOD
+    const user = firebase.auth().currentUser;
+    if (!user) {
+        alert("Du måste logga in för att rita med andra!");
+        showLoginButton();
+        return; // Stoppa whiteboard tills användaren loggar in
+    }
+
     // ✅ INITIERA FIREBASE DATABASE
     const database = firebase.database();
     const drawingsRef = database.ref('drawings');
@@ -108,8 +117,11 @@ function initWhiteboard() {
             color: currentColor,
             tool: currentTool,
             size: currentSize,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            userId: firebase.auth().currentUser.uid // 👈 Lägg till user ID
         };
+
+        database.ref('drawings').push(drawingData);
         
         drawingsRef.push(drawingData);
         [lastX, lastY] = [e.offsetX, e.offsetY];
