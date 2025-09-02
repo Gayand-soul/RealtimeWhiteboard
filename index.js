@@ -2,9 +2,14 @@
 // index.js - KORRIGERAD KOD
 document.addEventListener('DOMContentLoaded', function() {
     // ✅ INITIERA FIREBASE FÖRST!
-    firebase.initializeApp(window.firebaseConfig);
+    if (typeof firebaseConfig !== 'undefined') {
+        firebase.initializeApp(firebaseConfig);
+    } else {
+        console.error('firebaseConfig is not defined');
+        return;
+    }
 
-    // ✅ AUTO-SHOW LOGIN ON GITHUB PAGES - NY KOD
+    // ✅ AUTO-SHOW LOGIN ON GITHUB PAGES
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
         // Auto-login endast på localhost
         firebase.auth().signInWithEmailAndPassword("testtim@example.com", "test1234")
@@ -22,20 +27,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function showLoginButton() {
+// ✅ GÖR FUNKTIONERNA GLOBALA SÅ DE KAN ANROPAS FRÅN HTML
+window.showLoginButton = function() {
+    // Ta bort eventuell befintlig login-knapp först
+    const existingBtn = document.querySelector('#login-btn');
+    if (existingBtn) existingBtn.remove();
+    
     const loginBtn = document.createElement('button');
+    loginBtn.id = 'login-btn';
     loginBtn.textContent = 'Logga in som Testanvändare';
     loginBtn.style.cssText = `
-        padding: 10px 20px;
-        font-size: 16px;
+        padding: 15px 30px;
+        font-size: 18px;
         margin: 20px;
         background: #007bff;
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
     `;
-    loginBtn.onclick = () => {
+    loginBtn.onclick = function() {
         firebase.auth().signInWithEmailAndPassword("testtim@example.com", "test1234")
             .then(() => {
                 loginBtn.remove();
@@ -47,7 +63,7 @@ function showLoginButton() {
             });
     };
     document.body.appendChild(loginBtn);
-}
+};
 
 function showLoginForm() {
     const formHTML = `
@@ -62,21 +78,26 @@ function showLoginForm() {
     `;
     document.body.insertAdjacentHTML('afterbegin', formHTML);
 }
-
-function manualLogin() {
+window.manualLogin = function() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     
+    if (!email || !password) {
+        alert("Vänligen fyll i både email och lösenord");
+        return;
+    }
+    
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(() => {
-            document.getElementById('login-form').remove();
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) loginForm.remove();
             initWhiteboard();
         })
         .catch(error => {
             console.error("Inloggningsfel:", error);
             alert("Inloggning misslyckades: " + error.message);
         });
-}
+};
 
 //initera whiteboard
 function initWhiteboard() {
