@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realtime Whiteboard</title>
 
-     <!-- Mitt script som initierar Firebase-firestore och firebase-appen -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
+    <!-- Firebase CDN FÖRST -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-    <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="style.css">
+
+    
 
 </head>
-<body>
+<body>  
+    
     <div class="container">
         <header>
             <h1>Realtime Whiteboard</h1>
@@ -77,11 +81,12 @@
         <p><strong>Teknik:</strong> Firebase Realtime Database synkroniserar alla ritningar mellan användare.</p>
     </div>
     
-    
-     <!--  config ------>
-    <script src="config.js"></script>
+
+   <!-- LADDA config.js FÖRST -->
+    <script src="./config.js"></script>
+   
 
     <!--  index.js som innehåller alla JS kod -->
-    <script src="index.js"></script>  
+    <script src="./index.js"></script>  
 </body>
 </html>
